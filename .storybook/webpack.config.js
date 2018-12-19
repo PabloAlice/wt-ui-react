@@ -18,5 +18,8 @@ module.exports = {
   // plugins: webpackConfig.plugins,
   module: {
     rules: webpackConfig.module.rules.slice(1)
+  },
+  optimization: {
+    minimize: false
   }
 }
