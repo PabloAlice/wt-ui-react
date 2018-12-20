@@ -103,7 +103,8 @@ type PropsType = {
 };
 
 type StateType = {
-  internalVariant: 'light' | 'dark'
+  internalVariant: 'light' | 'dark',
+  internalBg?: string
 };
 class WTNavbar extends React.Component<PropsType, StateType> {
   static defaultProps = {
@@ -123,6 +124,7 @@ class WTNavbar extends React.Component<PropsType, StateType> {
     super(props);
     this.state = {
       internalVariant: props.variant === 'animated' ? 'dark' : props.variant,
+      internalBg: props.variant === 'animated' ? 'transparent' : props.bg,
     };
   }
 
@@ -140,19 +142,19 @@ class WTNavbar extends React.Component<PropsType, StateType> {
     const { variant } = this.props;
     if (!this.navbar || variant !== 'animated') return;
     if (window.pageYOffset > this.navbar.offsetHeight) {
-      this.setState({ internalVariant: 'light' });
+      this.setState({ internalVariant: 'light', internalBg: 'white' });
       return;
     }
-    this.setState({ internalVariant: 'dark' });
+    this.setState({ internalVariant: 'dark', internalBg: 'transparent' });
   }
 
   navbar: ?HTMLElement
 
   render() {
-    const { variant, ...restProps } = this.props;
-    const { internalVariant } = this.state;
+    const { variant, bg, ...restProps } = this.props;
+    const { internalVariant, internalBg } = this.state;
     return (
-      <BsNavbar variant={internalVariant} {...restProps} />
+      <BsNavbar variant={internalVariant} bg={internalBg} {...restProps} />
     );
   }
 }
